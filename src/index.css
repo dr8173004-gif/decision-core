@@ -4,55 +4,71 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
 
+/*
+  Global CSS para o projeto decision-core.
+
+  Este arquivo define uma paleta escura cinematográfica profunda
+  e classes utilitárias para dar aparência de vidro/flutuação nos
+  cartões. As variáveis são consumidas pelo Tailwind via hsl().
+*/
+
 @layer base {
   :root {
-    /* Paleta mais neutra (menos dramática) */
-    --background: 220 15% 10%;
-    --foreground: 210 20% 95%;
-    --card: 220 15% 14%;
-    --card-foreground: 210 20% 95%;
-    --popover: 220 15% 14%;
-    --popover-foreground: 210 20% 95%;
+    /* Tema dark cinematográfico */
+    --background: 220 25% 5%;
+    --foreground: 210 20% 94%;
+    --card: 220 20% 8%;
+    --card-foreground: 210 20% 94%;
+    --popover: 220 20% 6%;
+    --popover-foreground: 210 20% 94%;
 
-    /* Primária azul suave */
-    --primary: 205 26% 55%;
-    --primary-foreground: 200 20% 96%;
+    /* Azul elétrico para destaques */
+    --primary: 220 90% 55%;
+    --primary-foreground: 210 20% 98%;
 
-    /* Secundária grafite suave */
-    --secondary: 210 20% 25%;
-    --secondary-foreground: 210 20% 96%;
+    /* Roxo/índigo complementar */
+    --secondary: 265 65% 55%;
+    --secondary-foreground: 210 20% 98%;
 
-    /* Cores de destaque */
-    --muted: 210 20% 18%;
-    --muted-foreground: 210 20% 75%;
-    --accent: 205 26% 25%;
-    --accent-foreground: 205 26% 94%;
-    --destructive: 0 65% 55%;
-    --destructive-foreground: 210 20% 96%;
+    /* Cores neutras/mutadas */
+    --muted: 220 10% 16%;
+    --muted-foreground: 210 10% 70%;
+    --accent: 285 70% 45%;
+    --accent-foreground: 210 20% 96%;
+    --destructive: 3 70% 55%;
+    --destructive-foreground: 210 20% 98%;
 
-    --border: 210 20% 22%;
-    --input: 210 20% 22%;
-    --ring: 205 26% 55%;
+    /* Bordas, inputs e anéis */
+    --border: 220 20% 15%;
+    --input: 220 20% 15%;
+    --ring: 220 90% 55%;
   }
 
+  /* Gradiente de texto para títulos */
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)));
+    background-image: linear-gradient(
+      90deg,
+      hsl(var(--primary)),
+      hsl(var(--secondary))
+    );
   }
 
+  /* Sombra gradiente usada na imagem do hero */
   .fade-bottom {
     @apply absolute w-full h-full pointer-events-none;
     background: linear-gradient(
       to bottom,
-      hsl(var(--background) / 0) 70%,
+      hsl(var(--background) / 0) 40%,
       hsl(var(--background)) 90%
     );
   }
 }
 
 @layer utilities {
-  /* Cartões flutuantes com sombras reduzidas */
+  /* Cartões flutuantes com efeito de vidro */
   .floating-card {
-    @apply rounded-2xl border border-border bg-card shadow-lg transition-shadow hover:shadow-xl;
+    @apply rounded-2xl border border-border bg-card/80 backdrop-blur-md shadow-xl transition-all;
+    @apply hover:shadow-2xl hover:-translate-y-1;
   }
 }
