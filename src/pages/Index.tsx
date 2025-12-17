@@ -1,13 +1,14 @@
 import heroImage from "@/assets/hero-tailings-dam.jpg";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import {
-  AlertTriangle,
-  CheckCircle2,
-  TrendingUp,
-  Droplets,
   Gauge,
-  Timer,
+  Droplets,
+  ArrowUpRight,
+  ArrowDownLeft,
+  TrendingUp,
+  AlertTriangle,
   ClipboardList,
+  CheckCircle2,
 } from "lucide-react";
 import {
   Card,
@@ -17,21 +18,16 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 
 /**
- * Página principal como um estudo de caso técnico.
+ * A página principal agora é um dashboard imersivo para análise de caso.
+ * Inclui: hero com imagem, resumo, métricas-chave, gráfico de barras,
+ * diagnóstico, recomendações e próximos passos.
  */
 const Index = () => {
   const containerRef = useScrollReveal();
-  // Dados de exemplo: ajuste conforme seu caso real.
+
+  // Dados de exemplo (substitua pelos seus dados reais)
   const targetMoisture = 14.0;
   const readings = [
     { day: "D1", value: 13.8 },
@@ -39,226 +35,264 @@ const Index = () => {
     { day: "D3", value: 14.5 },
     { day: "D4", value: 14.9 },
   ];
-  const delta = (
-    readings[readings.length - 1].value - readings[0].value
-  ).toFixed(1);
+
+  const initial = readings[0].value;
+  const final = readings[readings.length - 1].value;
+  const delta = final - initial;
+  const trendPct = ((delta / initial) * 100).toFixed(1);
+
+  // Determina tamanho máximo das barras para que sejam proporcionais
+  const maxValue = Math.max(
+    targetMoisture * 1.3,
+    ...readings.map((r) => r.value),
+  );
 
   return (
-    <div ref={containerRef} className="min-h-screen">
-      {/* HERO */}
-      <header className="relative">
-        <div className="relative h-[46vh] md:h-[56vh] w-full overflow-hidden">
-          <img
-            src={heroImage}
-            alt="Estrutura de rejeito / pilha/barragem"
-            className="h-full w-full object-cover fade-bottom"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/10 via-background/55 to-background" />
-        </div>
-        <div className="mx-auto max-w-5xl px-6 -mt-16 md:-mt-20 relative">
-          <Card className="floating-card">
-            <CardHeader className="space-y-3">
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">Estudo de Caso</Badge>
-                <Badge variant="outline">Controle Tecnológico</Badge>
-                <Badge variant="outline">Rejeitos / Material fino</Badge>
-              </div>
-              <h1 className="text-2xl md:text-4xl font-semibold leading-tight">
-                Quando <span className="text-gradient">“passar no ensaio”</span> não é suficiente
-              </h1>
-              <p className="text-muted-foreground text-sm md:text-base">
-                Um caso simples, mas comum: os valores finais aprovam — a tendência derruba a decisão.
-                (Formato de aula: cenário → dados → leitura → decisão.)
-              </p>
-            </CardHeader>
-          </Card>
+    <div
+      ref={containerRef}
+      className="relative min-h-screen text-foreground bg-background"
+    >
+      {/* HERO com sobreposição escura */}
+      <header className="relative h-[50vh] w-full overflow-hidden">
+        <img
+          src={heroImage}
+          alt="Vista aérea da barragem ou área de rejeitos"
+          className="h-full w-full object-cover"
+        />
+        <div className="fade-bottom" />
+        <div className="absolute inset-0 flex items-end p-6 md:p-10">
+          <div className="max-w-3xl space-y-4">
+            <Badge variant="secondary" className="rounded-md px-3 py-1">
+              Análise de Caso
+            </Badge>
+            <h1 className="text-3xl md:text-5xl font-extrabold leading-tight">
+              Quando <span className="text-gradient">“passar no ensaio”</span> não basta
+            </h1>
+            <p className="text-muted-foreground text-sm md:text-base max-w-prose">
+              Um estudo sobre o papel da tendência de umidade em avanços
+              de alteamento: mesmo quando os valores atendem à meta, o comportamento da
+              curva pode indicar risco.
+            </p>
+          </div>
         </div>
       </header>
 
-      <main className="mx-auto max-w-5xl px-6 py-10 md:py-14 space-y-10">
-        {/* Objetivo */}
+      <main className="mx-auto max-w-6xl px-6 md:px-10 py-10 space-y-14">
+        {/* Resumo do Caso */}
         <section className="reveal">
-          <div className="flex items-center gap-2 mb-3">
-            <ClipboardList className="h-5 w-5" />
-            <h2 className="text-xl md:text-2xl font-semibold">Objetivo desta aula</h2>
-          </div>
           <Card className="floating-card">
-            <CardContent className="pt-6 space-y-3 text-sm md:text-base">
+            <CardHeader>
+              <CardTitle className="text-lg md:text-2xl">
+                Resumo do Caso
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3 text-sm md:text-base text-muted-foreground">
               <p>
-                Ensinar a ler controle tecnológico como <b>sistema de decisão</b>, e não como “carimbo de aprovação”.
+                Este relatório analisa um ciclo de alteamento em material
+                fino, onde a umidade controlada é crucial. As leituras
+                diárias ficaram próximas da meta de {targetMoisture.toFixed(1)}%, porém a
+                sequência revelou uma tendência crescente.
               </p>
-              <ul className="list-disc pl-5 text-muted-foreground space-y-2">
-                <li>Separar: valor pontual vs. tendência</li>
-                <li>Entender risco em estruturas sensíveis à umidade</li>
-                <li>Definir regra prática para travar/ajustar avanço</li>
-              </ul>
+              <p>
+                O objetivo é interpretar esses dados de forma sistemática, entender o que a
+                tendência significa em termos de risco e propor ações
+                práticas antes que surjam problemas de instabilidade.
+              </p>
             </CardContent>
           </Card>
         </section>
 
-        {/* Contexto */}
-        <section className="reveal reveal-delay-1">
-          <div className="flex items-center gap-2 mb-3">
-            <Timer className="h-5 w-5" />
-            <h2 className="text-xl md:text-2xl font-semibold">Cenário (campo)</h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-4">
-            <Card className="floating-card">
-              <CardHeader>
-                <CardTitle className="text-base">Condições</CardTitle>
-              </CardHeader>
-              <CardContent className="text-sm text-muted-foreground space-y-2">
-                <p>• Alteamento / avanço contínuo</p>
-                <p>• Material fino, sensível à variação de umidade</p>
-                <p>• Pressão por cronograma e produção</p>
-              </CardContent>
-            </Card>
-            <Card className="floating-card">
-              <CardHeader>
-                <CardTitle className="text-base">Ponto de atenção</CardTitle>
-              </CardHeader>
-              <CardContent className="text-sm text-muted-foreground space-y-2">
-                <p>• “Aprovado” não significa “estável”</p>
-                <p>• Umidade crescendo dia a dia costuma anteceder problemas</p>
-                <p>• A decisão correta depende da leitura do conjunto</p>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-
-        {/* Dados */}
-        <section className="reveal reveal-delay-2">
-          <div className="flex items-center gap-2 mb-3">
-            <Gauge className="h-5 w-5" />
-            <h2 className="text-xl md:text-2xl font-semibold">Dados (o que foi medido)</h2>
-          </div>
-          <Card className="floating-card">
-            <CardContent className="pt-6 space-y-5">
-              <div className="flex flex-wrap items-center gap-3">
-                <Badge variant="secondary">Umidade ótima (projeto): {targetMoisture.toFixed(1)}%</Badge>
-                <Badge variant="outline">Tendência (D1→D4): +{delta}%</Badge>
+        {/* Métricas principais */}
+        <section className="reveal">
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+            {/* Meta */}
+            <Card className="floating-card p-4 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Meta de umidade</span>
+                <Gauge className="h-4 w-4 text-primary" />
               </div>
-              <Separator />
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Dia</TableHead>
-                    <TableHead>Umidade medida</TableHead>
-                    <TableHead>Leitura rápida</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {readings.map((r) => {
-                    const diff = r.value - targetMoisture;
-                    const status =
-                      Math.abs(diff) <= 0.2
-                        ? "Dentro (ok)"
-                        : diff > 0
-                        ? "Acima (atenção)"
-                        : "Abaixo (atenção)";
-                    return (
-                      <TableRow key={r.day}>
-                        <TableCell className="font-medium">{r.day}</TableCell>
-                        <TableCell>{r.value.toFixed(1)}%</TableCell>
-                        <TableCell className="text-muted-foreground">{status}</TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-              <div className="text-sm text-muted-foreground flex items-start gap-2">
-                <Droplets className="h-4 w-4 mt-0.5" />
-                <p>
-                  <b>Nota:</b> o “valor do dia” pode até estar próximo do alvo, mas a <b>subida contínua</b> costuma ser ignorada.
-                </p>
+              <div className="text-2xl font-semibold">
+                {targetMoisture.toFixed(1)}%
               </div>
-            </CardContent>
-          </Card>
-        </section>
+              <p className="text-xs text-muted-foreground">Valor ótimo (projeto)</p>
+            </Card>
 
-        {/* Interpretação */}
-        <section className="reveal reveal-delay-3">
-          <div className="flex items-center gap-2 mb-3">
-            <TrendingUp className="h-5 w-5" />
-            <h2 className="text-xl md:text-2xl font-semibold">Interpretação (onde a decisão erra)</h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-4">
-            <Card className="floating-card">
-              <CardHeader>
-                <CardTitle className="text-base">Erro clássico</CardTitle>
-              </CardHeader>
-              <CardContent className="text-sm text-muted-foreground">
-                “Passou no ensaio” vira justificativa pra avançar — sem olhar tendência.
-              </CardContent>
-            </Card>
-            <Card className="floating-card">
-              <CardHeader>
-                <CardTitle className="text-base">O que foi ignorado</CardTitle>
-              </CardHeader>
-              <CardContent className="text-sm text-muted-foreground">
-                Crescimento de umidade ao longo dos dias (13,8 → 14,9).
-              </CardContent>
-            </Card>
-            <Card className="floating-card">
-              <CardHeader>
-                <CardTitle className="text-base">Por que é perigoso</CardTitle>
-              </CardHeader>
-              <CardContent className="text-sm text-muted-foreground">
-                Em material fino, umidade alta muda comportamento e pode “mascarar” risco mesmo com compactação ok.
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-
-        {/* Decisão recomendada */}
-        <section className="reveal reveal-delay-4">
-          <div className="flex items-center gap-2 mb-3">
-            <CheckCircle2 className="h-5 w-5" />
-            <h2 className="text-xl md:text-2xl font-semibold">Decisão técnica recomendada</h2>
-          </div>
-          <Card className="floating-card">
-            <CardContent className="pt-6 space-y-3 text-sm md:text-base">
-              <ul className="list-disc pl-5 text-muted-foreground space-y-2">
-                <li>Reduzir ritmo de lançamento / espalhamento</li>
-                <li>Ajustar umidade (condicionamento do material)</li>
-                <li>Reavaliar frente ativa e janela de execução</li>
-                <li>Avançar somente com tendência controlada</li>
-              </ul>
-              <Separator />
-              <div className="flex items-start gap-2 text-sm text-muted-foreground">
-                <AlertTriangle className="h-4 w-4 mt-0.5" />
-                <p>
-                  Regra prática: <b>tendência piorando</b> + <b>estrutura sensível</b> = a decisão deve travar antes do “evento”.
-                </p>
+            {/* Umidade inicial */}
+            <Card className="floating-card p-4 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Umidade inicial</span>
+                <Droplets className="h-4 w-4 text-primary" />
               </div>
-            </CardContent>
-          </Card>
-        </section>
+              <div className="text-2xl font-semibold">
+                {initial.toFixed(1)}%
+              </div>
+              <p className="text-xs text-muted-foreground">Medida em {readings[0].day}</p>
+            </Card>
 
-        {/* Checklist */}
-        <section className="reveal reveal-delay-5">
-          <div className="flex items-center gap-2 mb-3">
-            <ClipboardList className="h-5 w-5" />
-            <h2 className="text-xl md:text-2xl font-semibold">Checklist (pra aplicar em qualquer obra)</h2>
+            {/* Umidade final */}
+            <Card className="floating-card p-4 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Umidade final</span>
+                <Droplets className="h-4 w-4 text-primary" />
+              </div>
+              <div className="text-2xl font-semibold">
+                {final.toFixed(1)}%
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Medida em {readings[readings.length - 1].day}
+              </p>
+            </Card>
+
+            {/* Tendência */}
+            <Card className="floating-card p-4 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Tendência</span>
+                {delta >= 0 ? (
+                  <ArrowUpRight className="h-4 w-4 text-destructive" />
+                ) : (
+                  <ArrowDownLeft className="h-4 w-4 text-secondary" />
+                )}
+              </div>
+              <div
+                className={`text-2xl font-semibold ${
+                  delta >= 0 ? "text-destructive" : "text-secondary"
+                }`}
+              >
+                {(delta >= 0 ? "+" : "") + delta.toFixed(1)}%
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Variação {readings[0].day}→{readings[readings.length - 1].day} ({trendPct}%)
+              </p>
+            </Card>
           </div>
-          <Card className="floating-card">
-            <CardContent className="pt-6 text-sm text-muted-foreground space-y-2">
-              <p>✅ Tenho valor alvo e tolerância definidos?</p>
-              <p>✅ Olhei tendência (3–5 dias), não só o último número?</p>
-              <p>✅ O material é sensível à umidade? (fino / rejeito / argiloso)</p>
-              <p>✅ A decisão de avanço depende de tendência + contexto?</p>
-              <p>✅ Tenho plano de ação quando tendência piora?</p>
-            </CardContent>
-          </Card>
         </section>
 
-        {/* Takeaway */}
+        {/* Indicadores gráficos */}
         <section className="reveal">
           <Card className="floating-card">
-            <CardContent className="pt-6">
-              <p className="text-base md:text-lg">
-                Ensaios aprovam camadas. <b>Controle tecnológico protege decisões.</b>
+            <CardHeader>
+              <CardTitle className="text-lg md:text-2xl">
+                Indicadores de Umidade
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {readings.map((reading) => {
+                const diff = reading.value - targetMoisture;
+                let barColor;
+                if (Math.abs(diff) <= 0.2) {
+                  barColor = "bg-primary";
+                } else if (diff > 0) {
+                  barColor = "bg-destructive";
+                } else {
+                  barColor = "bg-secondary";
+                }
+                const widthPercent = (reading.value / maxValue) * 100;
+                return (
+                  <div key={reading.day} className="space-y-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">{reading.day}</span>
+                      <span className="text-sm">{reading.value.toFixed(1)}%</span>
+                    </div>
+                    <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
+                      <div
+                        style={{ width: `${widthPercent}%` }}
+                        className={`h-full ${barColor} rounded-full transition-all`}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+              <p className="text-xs text-muted-foreground flex items-start gap-1">
+                <TrendingUp className="h-4 w-4" />
+                Tendência crescente indica risco potencial mesmo dentro da tolerância.
               </p>
+            </CardContent>
+          </Card>
+        </section>
+
+        {/* Diagnóstico */}
+        <section className="reveal">
+          <Card className="floating-card">
+            <CardHeader>
+              <CardTitle className="text-lg md:text-2xl">
+                Diagnóstico Técnico
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3 text-sm md:text-base text-muted-foreground">
+              <ul className="list-disc pl-5 space-y-2">
+                <li>
+                  A umidade subiu de {initial.toFixed(1)}% para {final.toFixed(1)}%
+                  ({(delta >= 0 ? "+" : "") + delta.toFixed(1)}% ou {trendPct}%).
+                </li>
+                <li>
+                  Mesmo com leituras próximas da meta de {targetMoisture.toFixed(1)}%, a
+                  tendência ascendente sugere acúmulo de água no sistema.
+                </li>
+                <li>
+                  Materiais finos apresentam redução de resistência e aumento de
+                  deformabilidade quando a umidade se aproxima ou excede a ótima.
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+        </section>
+
+        {/* Recomendações */}
+        <section className="reveal">
+          <Card className="floating-card">
+            <CardHeader>
+              <CardTitle className="text-lg md:text-2xl">
+                Recomendações e Mitigação
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3 text-sm md:text-base text-muted-foreground">
+              <ul className="list-disc pl-5 space-y-2">
+                <li>
+                  Ajustar o condicionamento do material: promover secagem ou
+                  adicionar umidade controlada conforme necessário.
+                </li>
+                <li>
+                  Reduzir o ritmo de lançamento e compactação enquanto a tendência
+                  se mantiver crescente.
+                </li>
+                <li>
+                  Revisar drenagem e fontes de água (chuva, infiltração) que
+                  possam estar elevando a umidade dia a dia.
+                </li>
+                <li>
+                  Definir um limiar crítico (ex.: +0,5% acima da meta) que
+                  desencadeie parada imediata para avaliação.
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+        </section>
+
+        {/* Próximos Passos */}
+        <section className="reveal">
+          <Card className="floating-card">
+            <CardHeader>
+              <CardTitle className="text-lg md:text-2xl">Próximos Passos</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3 text-sm md:text-base text-muted-foreground">
+              <ul className="list-disc pl-5 space-y-2">
+                <li>
+                  Replicar esta análise semanalmente, registrando tendências e
+                  comparando com metas atualizadas.
+                </li>
+                <li>
+                  Criar dashboards para acompanhamento em tempo real,
+                  facilitando a tomada de decisão pela equipe no campo.
+                </li>
+                <li>
+                  Capacitar operadores e engenheiros para interpretar não apenas
+                  o valor pontual, mas a variação contínua.
+                </li>
+                <li>
+                  Documentar causas e correções quando tendências desfavoráveis
+                  forem observadas, alimentando um banco de lições aprendidas.
+                </li>
+              </ul>
             </CardContent>
           </Card>
         </section>
