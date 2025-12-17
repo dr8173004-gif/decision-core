@@ -1,345 +1,331 @@
-import { 
-  FileText, 
-  Search, 
-  AlertTriangle, 
-  BarChart3, 
-  CheckCircle,
-  Database,
-  TrendingUp,
-  Shield,
-  Clock,
-  DollarSign,
-  Activity,
-  X
-} from "lucide-react";
+import { AlertTriangle, ArrowDown, TrendingUp, X, Check, Droplets, Gauge, Timer, DollarSign, AlertCircle } from "lucide-react";
 import heroImage from "@/assets/hero-tailings-dam.jpg";
-import { Section, SectionHeader } from "@/components/Section";
-import { Step, StepFlow } from "@/components/StepFlow";
-import { ContextCard, TechnicalCard } from "@/components/TechnicalCard";
-import { DataTable } from "@/components/DataTable";
-import { AlertBox } from "@/components/AlertBox";
-import { InsightList } from "@/components/InsightCard";
-import { ImpactIndicator, ImpactChart } from "@/components/ImpactIndicator";
-import { Checklist } from "@/components/Checklist";
-import { ScenarioNav } from "@/components/ScenarioNav";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const Index = () => {
+  const containerRef = useScrollReveal();
+
   return (
-    <main className="min-h-screen bg-background">
-      {/* BLOCO 0 — CAPA / INTRODUÇÃO */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <main ref={containerRef} className="min-h-screen bg-background">
+      {/* ATO 1 — IMERSÃO */}
+      <section className="relative min-h-screen flex flex-col justify-end">
         {/* Background Image */}
         <div className="absolute inset-0">
           <img 
             src={heroImage} 
-            alt="Vista aérea de barragem de rejeitos de mineração" 
+            alt="Barragem de rejeitos em operação" 
             className="w-full h-full object-cover"
           />
           <div 
             className="absolute inset-0" 
-            style={{ background: "linear-gradient(180deg, hsl(222 47% 6% / 0.75) 0%, hsl(222 47% 6% / 0.95) 100%)" }}
+            style={{ background: "var(--gradient-hero)" }}
           />
         </div>
 
-        {/* Content */}
-        <div className="container relative z-10 py-20">
-          <div className="max-w-3xl">
-            <span className="inline-block text-xs font-semibold tracking-wider uppercase text-primary mb-6 animate-fade-in">
-              Análise técnica aplicada
-            </span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-slide-up">
-              Controle Tecnológico como{" "}
-              <span className="text-gradient">Sistema de Decisão</span>
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-4 animate-slide-up" style={{ animationDelay: "0.1s" }}>
-              Análise de cenários aplicados a pilhas e barragens de rejeito na mineração
-            </p>
-            <p className="text-sm text-muted-foreground/80 leading-relaxed max-w-xl animate-slide-up" style={{ animationDelay: "0.2s" }}>
-              Estudos simulados baseados em situações reais de obra, com foco em leitura técnica, 
-              identificação de falhas sistêmicas e tomada de decisão.
-            </p>
+        {/* Minimal content */}
+        <div className="relative z-10 px-6 pb-24 md:pb-32 max-w-2xl">
+          <p className="text-lg md:text-xl lg:text-2xl font-light leading-relaxed text-foreground/90 mb-3">
+            <span className="text-foreground font-medium">Controle tecnológico protege decisões.</span>
+          </p>
+          <p className="text-base md:text-lg text-muted-foreground font-light">
+            O que acontece quando ele não é usado como sistema?
+          </p>
+        </div>
 
-            {/* Scroll indicator */}
-            <div className="mt-16 animate-fade-in" style={{ animationDelay: "0.5s" }}>
-              <a 
-                href="#metodologia" 
-                className="inline-flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-              >
-                <span className="text-xs uppercase tracking-wider">Iniciar análise</span>
-                <div className="w-px h-8 bg-gradient-to-b from-primary to-transparent" />
-              </a>
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground animate-pulse-slow">
+          <ArrowDown className="w-5 h-5" />
+        </div>
+      </section>
+
+      {/* ATO 2 — CONTEXTO */}
+      <section className="scene bg-background">
+        <div className="max-w-lg mx-auto space-y-4">
+          <div className="reveal">
+            <span className="text-xs uppercase tracking-widest text-muted-foreground font-medium">Contexto</span>
+          </div>
+          
+          <div className="floating-card reveal reveal-delay-1">
+            <h2 className="text-lg font-semibold mb-6 text-foreground">Contexto da obra</h2>
+            
+            <div className="space-y-4">
+              <div className="flex items-start gap-4">
+                <div className="w-9 h-9 rounded bg-secondary flex items-center justify-center shrink-0">
+                  <TrendingUp className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-foreground">Alteamento contínuo</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Pilha/barragem de rejeitos</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-9 h-9 rounded bg-secondary flex items-center justify-center shrink-0">
+                  <Droplets className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-foreground">Material fino</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Sensível à variação de umidade</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-9 h-9 rounded bg-secondary flex items-center justify-center shrink-0">
+                  <Timer className="w-4 h-4 text-warning" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-foreground">Pressão por avanço</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Cronograma apertado</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* BLOCO 1 — COMO FUNCIONA A ANÁLISE */}
-      <Section id="metodologia" className="border-t border-border">
-        <SectionHeader 
-          label="Metodologia"
-          title="Como funciona a análise"
-          description="Cada cenário apresentado neste projeto segue um método fixo de análise técnica, semelhante à investigação de patologias em obras geotécnicas."
-        />
-
-        <StepFlow>
-          <Step 
-            number={1}
-            icon={FileText}
-            title="Contexto da obra"
-            description="Caracterização da estrutura, fase construtiva e condições operacionais."
-          />
-          <Step 
-            number={2}
-            icon={Database}
-            title="Dados do controle tecnológico"
-            description="Resultados de ensaios, medições e indicadores de qualidade."
-          />
-          <Step 
-            number={3}
-            icon={Search}
-            title="Identificação do problema"
-            description="Análise crítica das falhas sistêmicas e pontos de vulnerabilidade."
-          />
-          <Step 
-            number={4}
-            icon={AlertTriangle}
-            title="Análise dos impactos"
-            description="Consequências operacionais, custos e riscos associados."
-          />
-          <Step 
-            number={5}
-            icon={CheckCircle}
-            title="Decisão correta e medidas preventivas"
-            description="Ações que deveriam ter sido tomadas para evitar o problema."
-          />
-        </StepFlow>
-      </Section>
-
-      {/* BLOCO 2 — INÍCIO DO CENÁRIO (IMERSÃO) */}
-      <Section className="bg-secondary/30">
-        <div className="flex items-center gap-3 mb-8">
-          <span className="px-3 py-1 rounded-full bg-primary/20 text-primary text-xs font-semibold uppercase tracking-wider">
-            Cenário 4
-          </span>
-          <div className="h-px flex-1 bg-border" />
-        </div>
-
-        <SectionHeader 
-          title="Decisão técnica sem suporte do Controle Tecnológico"
-        />
-
-        <div className="grid md:grid-cols-2 gap-6">
-          <ContextCard 
-            items={[
-              { label: "Estrutura", value: "Pilha/Barragem de rejeitos" },
-              { label: "Fase", value: "Alteamento contínuo" },
-              { label: "Material", value: "Rejeito fino, sensível à umidade" },
-              { label: "Condição operacional", value: "Pressão por avanço" },
-            ]}
-          />
-          
-          <TechnicalCard className="flex flex-col justify-center">
-            <div className="flex items-center gap-3 text-warning mb-4">
-              <Clock className="w-5 h-5" />
-              <span className="text-sm font-semibold uppercase tracking-wider">Situação crítica</span>
-            </div>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Cronograma apertado e pressão por avanço rápido. Decisões sendo tomadas 
-              sem esperar a consolidação dos resultados do controle tecnológico.
-            </p>
-          </TechnicalCard>
-        </div>
-      </Section>
-
-      {/* BLOCO 3 — DADOS OBSERVADOS (INVESTIGAÇÃO) */}
-      <Section>
-        <SectionHeader 
-          label="Investigação"
-          title="Dados observados"
-          description="Análise dos resultados do controle tecnológico no período avaliado."
-        />
-
-        <div className="space-y-6">
-          <DataTable 
-            headers={["Parâmetro", "Valor"]}
-            rows={[
-              ["Umidade ótima de projeto", "14,0 %"],
-              ["Umidade medida (D1–D4)", "13,8 → 14,9 %"],
-              ["Grau de compactação mínimo", "≥ 95 %"],
-              ["Grau de compactação medido", "95,2 – 96,8 %"],
-            ]}
-          />
-
-          <TechnicalCard>
-            <p className="text-sm text-muted-foreground mb-4">
-              Todos os resultados estavam formalmente dentro dos critérios de aceitação.
-            </p>
-            <AlertBox variant="warning">
-              <strong>Resultados aceitáveis não significam decisão segura.</strong>
-              <br />
-              <span className="text-muted-foreground">
-                A aprovação formal de ensaios não garante que o comportamento do material 
-                esteja alinhado com as premissas de projeto a longo prazo.
-              </span>
-            </AlertBox>
-          </TechnicalCard>
-        </div>
-      </Section>
-
-      {/* BLOCO 4 — ANÁLISE DO PROBLEMA (PATOLOGIA) */}
-      <Section className="bg-secondary/30">
-        <SectionHeader 
-          label="Patologia"
-          title="Onde o sistema falhou"
-        />
-
-        <div className="grid gap-4">
-          {[
-            { icon: Clock, text: "Decisão tomada antes da leitura técnica completa" },
-            { icon: Shield, text: "Controle tecnológico usado apenas como validação posterior" },
-            { icon: TrendingUp, text: "Ausência de análise de tendência nos dados" },
-            { icon: Activity, text: "Falta de integração entre dado e decisão operacional" },
-          ].map((item, i) => (
-            <div key={i} className="technical-card flex items-center gap-4">
-              <div className="w-10 h-10 rounded-lg bg-destructive/20 flex items-center justify-center shrink-0">
-                <X className="w-5 h-5 text-destructive" />
-              </div>
-              <p className="text-sm">{item.text}</p>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      {/* BLOCO 5 — IMPACTO OPERACIONAL (CONSEQUÊNCIA) */}
-      <Section>
-        <SectionHeader 
-          label="Consequência"
-          title="Impacto operacional"
-        />
-
-        <div className="grid sm:grid-cols-3 gap-4 mb-8">
-          <ImpactIndicator 
-            label="Custo"
-            value="Elevado"
-            trend="up"
-            variant="danger"
-          />
-          <ImpactIndicator 
-            label="Prazo"
-            value="Atrasado"
-            trend="up"
-            variant="warning"
-          />
-          <ImpactIndicator 
-            label="Risco"
-            value="Aumentado"
-            trend="up"
-            variant="danger"
-          />
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <TechnicalCard>
-              <ul className="space-y-3">
-                {[
-                  "Retrabalho em camadas recentes",
-                  "Redução de produtividade",
-                  "Correções com custo elevado",
-                  "Aumento de risco operacional",
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm">
-                    <span className="w-1.5 h-1.5 rounded-full bg-destructive mt-2 shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </TechnicalCard>
-
-            <AlertBox variant="info">
-              Em estruturas de rejeito, o impacto raramente aparece na hora.
-              <br />
-              <strong className="text-foreground">Ele cresce em silêncio.</strong>
-            </AlertBox>
+      {/* ATO 3 — DADOS */}
+      <section className="scene bg-secondary/20">
+        <div className="max-w-lg mx-auto space-y-4">
+          <div className="reveal">
+            <span className="text-xs uppercase tracking-widest text-muted-foreground font-medium">Dados de campo</span>
           </div>
 
-          <ImpactChart />
+          {/* Umidade ótima */}
+          <div className="data-card reveal reveal-delay-1">
+            <div className="flex items-center gap-3 mb-1">
+              <Gauge className="w-4 h-4 text-primary" />
+              <span className="text-xs text-muted-foreground uppercase tracking-wide">Umidade ótima de projeto</span>
+            </div>
+            <p className="text-2xl font-semibold text-foreground">14,0%</p>
+          </div>
+
+          {/* Timeline de umidade */}
+          <div className="data-card reveal reveal-delay-2">
+            <div className="flex items-center gap-3 mb-4">
+              <Droplets className="w-4 h-4 text-primary" />
+              <span className="text-xs text-muted-foreground uppercase tracking-wide">Umidade medida</span>
+            </div>
+            
+            <div className="flex items-center justify-between gap-2">
+              <div className="text-center">
+                <p className="text-sm font-semibold text-foreground">13,8%</p>
+                <p className="text-[10px] text-muted-foreground mt-1">D1</p>
+              </div>
+              <div className="timeline-connector" />
+              <div className="text-center">
+                <p className="text-sm font-semibold text-foreground">14,1%</p>
+                <p className="text-[10px] text-muted-foreground mt-1">D2</p>
+              </div>
+              <div className="timeline-connector" />
+              <div className="text-center">
+                <p className="text-sm font-semibold text-foreground">14,5%</p>
+                <p className="text-[10px] text-muted-foreground mt-1">D3</p>
+              </div>
+              <div className="timeline-connector" />
+              <div className="text-center">
+                <p className="text-sm font-semibold text-warning">14,9%</p>
+                <p className="text-[10px] text-muted-foreground mt-1">D4</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Compactação */}
+          <div className="data-card reveal reveal-delay-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">Grau de compactação</span>
+                </div>
+                <p className="text-xl font-semibold text-foreground">≥ 95%</p>
+              </div>
+              <div className="px-3 py-1.5 bg-accent/20 rounded text-xs font-medium text-accent">
+                Aprovado
+              </div>
+            </div>
+          </div>
         </div>
-      </Section>
+      </section>
 
-      {/* BLOCO 6 — LEITURA TÉCNICA CORRETA */}
-      <Section className="bg-secondary/30">
-        <SectionHeader 
-          label="Fundamentos"
-          title="Leitura técnica adequada"
-          description="Princípios que deveriam ter orientado a interpretação dos dados."
-        />
+      {/* ATO 4 — QUEBRA */}
+      <section className="scene bg-background">
+        <div className="max-w-lg mx-auto">
+          <div className="alert-card reveal text-center py-10">
+            <AlertTriangle className="w-10 h-10 text-warning mx-auto mb-6" />
+            <p className="text-lg font-medium text-foreground mb-2">
+              Todos os ensaios passaram.
+            </p>
+            <p className="text-lg text-muted-foreground">
+              Mesmo assim, a decisão falhou.
+            </p>
+          </div>
 
-        <InsightList 
-          insights={[
-            "Tendência é mais importante que valor isolado. Um dado dentro do limite, mas em crescimento constante, exige atenção.",
-            "Compactação forçada mascara comportamento do material. O grau de compactação pode estar dentro do especificado, mas o material pode não responder como esperado.",
-            "Controle tecnológico deve orientar o momento da decisão, não apenas validar decisões já tomadas.",
-          ]}
-        />
-      </Section>
+          <div className="mt-8 reveal reveal-delay-1">
+            <div className="flex items-center gap-3 justify-center text-sm text-warning">
+              <AlertCircle className="w-4 h-4" />
+              <span>A tendência foi ignorada, não o valor final.</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      {/* BLOCO 7 — DECISÃO CORRETA */}
-      <Section>
-        <SectionHeader 
-          label="Resolução"
-          title="Decisão que deveria ter sido tomada"
-        />
+      {/* ATO 5 — ANÁLISE DE CAUSA */}
+      <section className="scene bg-secondary/20">
+        <div className="max-w-lg mx-auto space-y-4">
+          <div className="reveal">
+            <span className="text-xs uppercase tracking-widest text-muted-foreground font-medium">Análise de causa</span>
+          </div>
 
-        <Checklist 
-          items={[
-            "Reduzir ritmo de lançamento até estabilização dos indicadores",
-            "Ajustar umidade do material antes da compactação",
-            "Reavaliar frente ativa com base na tendência dos dados",
-            "Retomar avanço apenas após confirmação técnica de estabilização",
-          ]}
-        />
+          <div className="cause-card reveal reveal-delay-1">
+            <div className="flex items-start gap-4">
+              <div className="w-8 h-8 rounded bg-destructive/20 flex items-center justify-center shrink-0 mt-0.5">
+                <X className="w-4 h-4 text-destructive" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-foreground">Decisão tomada antes da leitura técnica</p>
+                <p className="text-xs text-muted-foreground mt-1">Avanço autorizado sem análise de tendência</p>
+              </div>
+            </div>
+          </div>
 
-        <div className="mt-10 p-6 rounded-lg border-2 border-primary/30 bg-primary/5">
-          <p className="text-center text-sm md:text-base leading-relaxed">
-            <span className="text-muted-foreground">Ensaios aprovam camadas.</span>
+          <div className="cause-card reveal reveal-delay-2">
+            <div className="flex items-start gap-4">
+              <div className="w-8 h-8 rounded bg-destructive/20 flex items-center justify-center shrink-0 mt-0.5">
+                <X className="w-4 h-4 text-destructive" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-foreground">CT usado como validação</p>
+                <p className="text-xs text-muted-foreground mt-1">Controle tecnológico apenas confirmou decisões já tomadas</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="cause-card reveal reveal-delay-3">
+            <div className="flex items-start gap-4">
+              <div className="w-8 h-8 rounded bg-destructive/20 flex items-center justify-center shrink-0 mt-0.5">
+                <X className="w-4 h-4 text-destructive" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-foreground">Tendência ignorada</p>
+                <p className="text-xs text-muted-foreground mt-1">Crescimento de 13,8% → 14,9% desconsiderado</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="cause-card reveal reveal-delay-4">
+            <div className="flex items-start gap-4">
+              <div className="w-8 h-8 rounded bg-destructive/20 flex items-center justify-center shrink-0 mt-0.5">
+                <X className="w-4 h-4 text-destructive" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-foreground">Compactação mascarou comportamento</p>
+                <p className="text-xs text-muted-foreground mt-1">Grau aprovado não significa material estável</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ATO 6 — IMPACTO */}
+      <section className="scene bg-background">
+        <div className="max-w-lg mx-auto space-y-6">
+          <div className="reveal">
+            <span className="text-xs uppercase tracking-widest text-muted-foreground font-medium">Impacto</span>
+          </div>
+
+          <div className="floating-card reveal reveal-delay-1">
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <DollarSign className="w-4 h-4 text-destructive" />
+                  <span className="text-sm text-muted-foreground">Correção tardia</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-20 h-2 bg-secondary rounded-full overflow-hidden">
+                    <div className="w-full h-full bg-destructive rounded-full" />
+                  </div>
+                  <TrendingUp className="w-4 h-4 text-destructive" />
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <DollarSign className="w-4 h-4 text-accent" />
+                  <span className="text-sm text-muted-foreground">Ajuste preventivo</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-20 h-2 bg-secondary rounded-full overflow-hidden">
+                    <div className="w-6 h-full bg-accent rounded-full" />
+                  </div>
+                  <span className="text-xs text-accent font-medium">mínimo</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p className="text-sm text-muted-foreground text-center reveal reveal-delay-2 px-4">
+            Em estruturas de rejeito, o impacto raramente aparece na hora.
             <br />
-            <strong className="text-lg md:text-xl text-foreground">
-              Controle tecnológico protege decisões.
-            </strong>
+            <span className="text-foreground font-medium">Ele cresce em silêncio.</span>
           </p>
         </div>
-      </Section>
+      </section>
 
-      {/* BLOCO 8 — NAVEGAÇÃO ENTRE CENÁRIOS */}
-      <Section className="bg-secondary/30 border-t border-border">
-        <div className="text-center mb-8">
-          <span className="text-xs font-semibold tracking-wider uppercase text-muted-foreground">
-            Sistema em expansão
-          </span>
-          <h3 className="text-xl font-bold mt-2">Explore outros cenários</h3>
+      {/* ATO 7 — DECISÃO CORRETA */}
+      <section className="scene bg-secondary/20">
+        <div className="max-w-lg mx-auto space-y-4">
+          <div className="reveal">
+            <span className="text-xs uppercase tracking-widest text-muted-foreground font-medium">Decisão correta</span>
+          </div>
+
+          <div className="decision-card reveal reveal-delay-1">
+            <div className="flex items-center gap-3">
+              <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center shrink-0">
+                <Check className="w-3.5 h-3.5 text-accent" />
+              </div>
+              <span className="text-sm text-foreground">Reduzir ritmo de lançamento</span>
+            </div>
+          </div>
+
+          <div className="decision-card reveal reveal-delay-2">
+            <div className="flex items-center gap-3">
+              <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center shrink-0">
+                <Check className="w-3.5 h-3.5 text-accent" />
+              </div>
+              <span className="text-sm text-foreground">Ajustar umidade do material</span>
+            </div>
+          </div>
+
+          <div className="decision-card reveal reveal-delay-3">
+            <div className="flex items-center gap-3">
+              <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center shrink-0">
+                <Check className="w-3.5 h-3.5 text-accent" />
+              </div>
+              <span className="text-sm text-foreground">Reavaliar frente ativa</span>
+            </div>
+          </div>
+
+          <div className="decision-card reveal reveal-delay-4">
+            <div className="flex items-center gap-3">
+              <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center shrink-0">
+                <Check className="w-3.5 h-3.5 text-accent" />
+              </div>
+              <span className="text-sm text-foreground">Avançar somente com estabilidade</span>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <ScenarioNav 
-          currentScenario={4}
-          totalScenarios={6}
-        />
-
-        <p className="text-center text-xs text-muted-foreground mt-8">
-          Novos cenários são adicionados periodicamente com base em situações reais de obra.
-        </p>
-      </Section>
-
-      {/* Footer */}
-      <footer className="py-8 border-t border-border">
-        <div className="container">
-          <p className="text-center text-xs text-muted-foreground">
-            Plataforma de análise técnica aplicada ao controle tecnológico em mineração.
-            <br />
-            Cenários baseados em situações simuladas para fins educacionais.
+      {/* FECHAMENTO */}
+      <section className="scene bg-background min-h-[60vh]">
+        <div className="max-w-lg mx-auto text-center reveal">
+          <p className="text-base text-muted-foreground mb-2">
+            Ensaios aprovam camadas.
+          </p>
+          <p className="text-xl md:text-2xl font-semibold text-foreground">
+            Controle tecnológico protege decisões.
           </p>
         </div>
-      </footer>
+      </section>
     </main>
   );
 };
