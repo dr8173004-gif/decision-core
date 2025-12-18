@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 
-import hero from "../../assets/hero-barragem-analise.jpg";
-import frente from "../../assets/frente-servico-compactacao.jpg";
-import lab from "../../assets/laboratorio-ensaios.jpg";
-import diagrama from "../../assets/diagrama-rabiscado.jpg";
-import monitoramento from "../../assets/instrumentacao-monitoramento.jpg";
+import hero from "@/assets/hero-barragem-analise.jpg";
+import frente from "@/assets/frente-servico-compactacao.jpg";
+import lab from "@/assets/laboratorio-ensaios.jpg";
+import diagrama from "@/assets/diagrama-rabiscado.jpg";
+import monitoramento from "@/assets/instrumentacao-monitoramento.jpg";
 
 function KPI({
   title,
