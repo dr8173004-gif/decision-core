@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import hero from "../../assets/hero-barragem-analise.jpg";
 import frente from "../../assets/frente-servico-compactacao.jpg";
 import lab from "../../assets/laboratorio-ensaios.jpg";
@@ -62,6 +64,21 @@ function TrendMini() {
 }
 
 export default function Index() {
+  useEffect(() => {
+    const blocks = Array.from(document.querySelectorAll(".block"));
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add("is-visible");
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    blocks.forEach((b) => io.observe(b));
+    return () => io.disconnect();
+  }, []);
+
   return (
     <article className="page">
       {/* Fundo fixo */}
@@ -71,7 +88,7 @@ export default function Index() {
       {/* Coluna central */}
       <main className="sheet">
         {/* Abertura */}
-        <header className="hero">
+        <header className="hero block">
           <div className="heroTitle">
             Decidir sem usar o Controle Tecnológico
             <span className="heroTitle2">é operar no escuro</span>
@@ -93,8 +110,8 @@ export default function Index() {
           <div className="blockHead">
             <h2>Contexto</h2>
             <p>
-              Cronograma apertado. Execução avançando. Ensaios sendo feitos — mas a decisão
-              acontecendo por prazo e custo, não pela leitura técnica.
+              Cronograma apertado. Execução avançando. Ensaios sendo feitos — mas a decisão acontecendo por prazo e custo,
+              não pela leitura técnica.
             </p>
           </div>
 
@@ -110,9 +127,7 @@ export default function Index() {
         <section className="block">
           <div className="blockHead">
             <h2>O que o CT fez corretamente</h2>
-            <p>
-              Aqui é importante: não foi “falta de ensaio”. O CT gerou informação. O sistema falhou na decisão.
-            </p>
+            <p>Aqui é importante: não foi “falta de ensaio”. O CT gerou informação. O sistema falhou na decisão.</p>
           </div>
 
           <div className="grid2">
@@ -153,6 +168,56 @@ export default function Index() {
           </figure>
 
           <TrendMini />
+        </section>
+
+        {/* NOVO: Análise de causa */}
+        <section className="block">
+          <div className="blockHead">
+            <h2>Análise de causa</h2>
+            <p>
+              O problema não foi o ensaio. Foi a ausência de um <b>mecanismo de decisão</b> baseado em gatilhos.
+              Sem esse mecanismo, o dado vira “arquivo” e não vira ação.
+            </p>
+          </div>
+
+          <div className="causeGrid">
+            <div className="causeCard">
+              <div className="causeTag">CAUSA</div>
+              <div className="causeTitle">Decisão por cronograma</div>
+              <div className="causeText">
+                Prioriza avanço contínuo. CT entra tarde, apenas para confirmar o que já foi executado.
+              </div>
+            </div>
+
+            <div className="causeArrow">→</div>
+
+            <div className="causeCard">
+              <div className="causeTag">EFEITO</div>
+              <div className="causeTitle">Tendência vira “valor isolado”</div>
+              <div className="causeText">
+                Umidade fora do ideal, compactação insuficiente ou dispersão crescente deixam de ser sinal de alerta
+                e passam como “variação aceitável”.
+              </div>
+            </div>
+
+            <div className="causeArrow">→</div>
+
+            <div className="causeCard">
+              <div className="causeTag">CONSEQUÊNCIA</div>
+              <div className="causeTitle">Risco acumulativo + correção cara</div>
+              <div className="causeText">
+                O ajuste que era simples na hora vira retrabalho, reforço, atraso e perda de confiabilidade.
+              </div>
+            </div>
+          </div>
+
+          <div className="callout">
+            <div className="calloutTitle">Regra prática</div>
+            <div className="calloutText">
+              Em estruturas críticas, o CT precisa ter “poder de freio”: se a tendência indica desvio,
+              a obra diminui ritmo até reestabilizar o processo.
+            </div>
+          </div>
         </section>
 
         {/* Dashboards em código */}
@@ -213,7 +278,49 @@ export default function Index() {
           </div>
         </section>
 
-        {/* Decisão correta */}
+        {/* NOVO: Plano 72h */}
+        <section className="block">
+          <div className="blockHead">
+            <h2>Plano de decisão (72 horas)</h2>
+            <p>
+              Isso dá cara de apresentação de engenharia: simples, executável e alinhado com obra.
+            </p>
+          </div>
+
+          <div className="timeline">
+            <div className="tlItem">
+              <div className="tlDot" />
+              <div className="tlBody">
+                <div className="tlTitle">0–6h — reduzir ritmo e travar decisão</div>
+                <div className="tlText">
+                  Paralisar parcialmente a frente crítica. Consolidar resultados, checar dispersão e confirmar condições reais do material.
+                </div>
+              </div>
+            </div>
+
+            <div className="tlItem">
+              <div className="tlDot" />
+              <div className="tlBody">
+                <div className="tlTitle">6–24h — ajustar processo e revalidar</div>
+                <div className="tlText">
+                  Ajuste de umidade, energia/controle de compactação, espessura de camada e sequência. Repetir ensaios-alvo para confirmar correção.
+                </div>
+              </div>
+            </div>
+
+            <div className="tlItem">
+              <div className="tlDot" />
+              <div className="tlBody">
+                <div className="tlTitle">24–72h — retomar com monitoramento</div>
+                <div className="tlText">
+                  Retomar apenas com tendência estabilizada e registro formal. Integrar instrumentação e gatilhos (alerta → ação) durante a execução.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Decisão correta (mantida) */}
         <section className="block">
           <div className="blockHead">
             <h2>Decisão que deveria ter sido tomada</h2>
@@ -244,7 +351,7 @@ export default function Index() {
           </div>
         </section>
 
-        <footer className="footer">
+        <footer className="footer block">
           <div className="footerText">
             Em pilhas e barragens, um controle tecnológico atuante não é opcional — é base de decisão segura e responsável.
           </div>
