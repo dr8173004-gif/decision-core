@@ -1,31 +1,35 @@
-const timelineItems = [
-  {
-    date: "Dia 1",
-    title: "Primeiros sinais ignorados",
-    text: "Umidade medida em 14,5%, ligeiramente acima do ótimo (14,0%). Ensaio aprova, mas a tendência não é avaliada. Obra segue ritmo normal.",
-  },
-  {
-    date: "Dia 7",
-    title: "Tendência se confirma",
-    text: "Umidade acumula em 15,2% na média. Dispersão aumenta. Compactação ainda dentro do limite, mas com margem reduzida. Nenhum gatilho acionado.",
-  },
-  {
-    date: "Dia 30",
-    title: "Problema materializado",
-    text: "Camadas apresentam comportamento irregular. Retrabalho necessário em 3 trechos. Custo de correção estimado em R$ 480k. Prazo impactado em 25 dias úteis.",
-  },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function CaseTimeline() {
+  const { t } = useLanguage();
+
+  const timelineItems = [
+    {
+      dateKey: "timeline.day1.date",
+      titleKey: "timeline.day1.title",
+      textKey: "timeline.day1.text",
+    },
+    {
+      dateKey: "timeline.day7.date",
+      titleKey: "timeline.day7.title",
+      textKey: "timeline.day7.text",
+    },
+    {
+      dateKey: "timeline.day30.date",
+      titleKey: "timeline.day30.title",
+      textKey: "timeline.day30.text",
+    },
+  ];
+
   return (
     <div className="timeline">
       {timelineItems.map((item, i) => (
         <div key={i} className="timeline-item reveal" style={{ transitionDelay: `${i * 0.15}s` }}>
           <div className={`timeline-dot ${i === timelineItems.length - 1 ? "" : "pulse"}`} />
           <div>
-            <div className="timeline-date">{item.date}</div>
-            <div className="timeline-title">{item.title}</div>
-            <div className="timeline-text">{item.text}</div>
+            <div className="timeline-date">{t(item.dateKey)}</div>
+            <div className="timeline-title">{t(item.titleKey)}</div>
+            <div className="timeline-text">{t(item.textKey)}</div>
           </div>
         </div>
       ))}
