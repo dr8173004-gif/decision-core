@@ -15,6 +15,8 @@ import { MiniDashboard } from "@/components/presentation/MiniDashboard";
 import { CaseTimeline } from "@/components/presentation/CaseTimeline";
 import { StopAndThink } from "@/components/presentation/StopAndThink";
 import { DecisionChecklist } from "@/components/presentation/Checklist";
+import { LanguageToggle } from "@/components/presentation/LanguageToggle";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // KPI Card Component
 function KPI({
@@ -39,6 +41,8 @@ function KPI({
 
 // Trend visualization component
 function TrendVisualization() {
+  const { t } = useLanguage();
+  
   const data = [
     { day: "D1", value: 13.8, status: "ok" },
     { day: "D2", value: 14.1, status: "ok" },
@@ -52,10 +56,10 @@ function TrendVisualization() {
       <div className="flex items-center justify-between mb-4">
         <div>
           <div className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
-            Tendência de Umidade
+            {t("data.trend.title")}
           </div>
           <div className="text-xs text-muted-foreground mt-1">
-            Umidade ótima: 14,0% | Tolerância: ±0,5%
+            {t("data.trend.optimal")}
           </div>
         </div>
         <AlertTriangle className="text-warning" size={20} />
@@ -95,7 +99,7 @@ function TrendVisualization() {
       </div>
 
       <div className="mt-4 pt-4 border-t border-border/30 text-sm text-muted-foreground">
-        <strong className="text-primary">Insight:</strong> O problema não é o valor isolado — é a curva ascendente que ninguém parou para analisar.
+        <strong className="text-primary">Insight:</strong> {t("data.trend.insight")}
       </div>
     </div>
   );
@@ -103,6 +107,7 @@ function TrendVisualization() {
 
 export default function Index() {
   const [dashboardVisible, setDashboardVisible] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const revealElements = document.querySelectorAll(".reveal");
@@ -140,23 +145,26 @@ export default function Index() {
       {/* Slide Indicator */}
       <SlideIndicator totalSlides={8} />
 
+      {/* Language Toggle */}
+      <LanguageToggle />
+
       {/* ========== SLIDE 1: HERO ========== */}
       <section className="slide slide-hero">
         <div className="slide-content reveal">
           <h1 className="title-hero mb-6">
-            Decidir sem usar o<br />
-            Controle Tecnológico<br />
-            <span className="text-primary">é operar no escuro</span>
+            {t("hero.title.line1")}<br />
+            {t("hero.title.line2")}<br />
+            <span className="text-primary">{t("hero.title.highlight")}</span>
           </h1>
 
           <p className="subtitle mx-auto mb-12">
-            Em pilhas e barragens de rejeitos, o CT não existe para "validar depois".
-            Ele existe para dizer <strong className="text-accent-foreground">quando ajustar</strong> e{" "}
-            <strong className="text-accent-foreground">quando parar</strong> — enquanto ainda é barato e seguro.
+            {t("hero.subtitle.part1")} {t("hero.subtitle.part2")}{" "}
+            <strong className="text-accent-foreground">{t("hero.subtitle.whenAdjust")}</strong> {t("hero.subtitle.and")}{" "}
+            <strong className="text-accent-foreground">{t("hero.subtitle.whenStop")}</strong> {t("hero.subtitle.part3")}
           </p>
 
           <div className="scroll-indicator text-muted-foreground">
-            <span className="text-xs uppercase tracking-widest font-medium">Role para explorar</span>
+            <span className="text-xs uppercase tracking-widest font-medium">{t("hero.scroll")}</span>
             <ArrowDown size={20} />
           </div>
         </div>
@@ -166,9 +174,9 @@ export default function Index() {
       <section className="slide">
         <div className="slide-content">
           <div className="reveal">
-            <h2 className="title-section">Contexto da Obra</h2>
+            <h2 className="title-section">{t("context.title")}</h2>
             <p className="subtitle mb-8">
-              Cronograma apertado. Execução avançando. Ensaios sendo feitos — mas a decisão acontecendo por prazo e custo, não pela leitura técnica.
+              {t("context.subtitle")}
             </p>
           </div>
 
@@ -179,10 +187,10 @@ export default function Index() {
                   <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
                     <TrendingUp className="text-primary" size={20} />
                   </div>
-                  <span className="font-bold">Alteamento contínuo</span>
+                  <span className="font-bold">{t("context.card1.title")}</span>
                 </div>
                 <p className="text-body">
-                  Pilha de rejeitos em fase de alteamento contínuo, com meta de avanço vertical de 2,5m por mês. Material fino (silte argiloso), sensível à variação de umidade.
+                  {t("context.card1.text")}
                 </p>
               </div>
 
@@ -191,10 +199,10 @@ export default function Index() {
                   <div className="w-10 h-10 rounded-full bg-secondary/30 flex items-center justify-center">
                     <Droplets className="text-secondary" size={20} />
                   </div>
-                  <span className="font-bold">Condições críticas</span>
+                  <span className="font-bold">{t("context.card2.title")}</span>
                 </div>
                 <p className="text-body">
-                  Período chuvoso com precipitação acumulada acima da média. Umidade natural do material variando entre 14% e 17%. Janela de compactação reduzida.
+                  {t("context.card2.text")}
                 </p>
               </div>
 
@@ -203,20 +211,20 @@ export default function Index() {
                   <div className="w-10 h-10 rounded-full bg-warning/20 flex items-center justify-center">
                     <Timer className="text-warning" size={20} />
                   </div>
-                  <span className="font-bold">Pressão de prazo</span>
+                  <span className="font-bold">{t("context.card3.title")}</span>
                 </div>
                 <p className="text-body">
-                  Contrato prevê penalidades por atraso. Equipe de execução pressionada para manter ritmo. Controle Tecnológico visto como "obstáculo" ao invés de ferramenta.
+                  {t("context.card3.text")}
                 </p>
               </div>
             </div>
 
             <div className="reveal reveal-delay-2">
               <div className="figure-container">
-                <img src={frente} alt="Frente de serviço e compactação" />
+                <img src={frente} alt="Work front and compaction" />
                 <div className="figure-caption">
-                  <span className="figure-label">Figura 01</span>
-                  Frente de serviço durante alteamento. Onde a decisão realmente acontece.
+                  <span className="figure-label">{t("context.figure1.label")}</span>
+                  {t("context.figure1.caption")}
                 </div>
               </div>
             </div>
@@ -228,9 +236,9 @@ export default function Index() {
       <section className="slide" id="slide-dashboard">
         <div className="slide-content">
           <div className="reveal">
-            <h2 className="title-section">Os Dados Estavam Lá</h2>
+            <h2 className="title-section">{t("data.title")}</h2>
             <p className="subtitle mb-8">
-              O CT coletou, tratou e entregou os resultados corretamente. O problema não foi falta de informação — foi falta de leitura decisória.
+              {t("data.subtitle")}
             </p>
           </div>
 
@@ -244,8 +252,8 @@ export default function Index() {
 
           <div className="reveal reveal-delay-3">
             <StopAndThink
-              question="Se todos os ensaios foram aprovados, por que a decisão falhou?"
-              answer="Porque aprovação de ensaio não é o mesmo que leitura de tendência. O ensaio olha para o ponto; o controle tecnológico efetivo olha para a curva. Uma sequência de valores 'dentro do limite' pode esconder uma tendência de desvio que, se não corrigida, leva a problemas acumulativos."
+              question={t("data.stopThink.question")}
+              answer={t("data.stopThink.answer")}
             />
           </div>
         </div>
@@ -255,9 +263,9 @@ export default function Index() {
       <section className="slide">
         <div className="slide-content">
           <div className="reveal">
-            <h2 className="title-section">O Fluxo de Decisão</h2>
+            <h2 className="title-section">{t("flow.title")}</h2>
             <p className="subtitle mb-8">
-              Em estruturas críticas, cada dado deve percorrer um caminho claro até virar ação. Quando esse fluxo é quebrado, o risco se acumula silenciosamente.
+              {t("flow.subtitle")}
             </p>
           </div>
 
@@ -267,16 +275,16 @@ export default function Index() {
 
           <div className="reveal reveal-delay-2">
             <div className="figure-container">
-              <img src={diagrama} alt="Diagrama de fluxo de decisão" />
+              <img src={diagrama} alt="Decision flow diagram" />
               <div className="figure-caption">
-                <span className="figure-label">Figura 02</span>
-                Fluxo típico onde o CT é ignorado: dado → (arquivo) → decisão por prazo → risco assumido.
+                <span className="figure-label">{t("flow.figure2.label")}</span>
+                {t("flow.figure2.caption")}
               </div>
             </div>
           </div>
 
           <div className="note-box reveal reveal-delay-3">
-            <strong>Falha típica:</strong> A seta entre "Dado" e "Decisão" é cortada. O CT vira documentação retroativa, não ferramenta de gestão.
+            <strong>{t("flow.note.label")}</strong> {t("flow.note")}
           </div>
         </div>
       </section>
@@ -285,9 +293,9 @@ export default function Index() {
       <section className="slide">
         <div className="slide-content">
           <div className="reveal">
-            <h2 className="title-section">Onde o Sistema Falhou</h2>
+            <h2 className="title-section">{t("failure.title")}</h2>
             <p className="subtitle mb-8">
-              O problema não foi o ensaio. Foi a ausência de um <strong className="text-primary">mecanismo de decisão</strong> baseado em gatilhos. Sem esse mecanismo, o dado vira "arquivo" e não vira ação.
+              {t("failure.subtitle.part1")} <strong className="text-primary">{t("failure.subtitle.highlight")}</strong> {t("failure.subtitle.part2")}
             </p>
           </div>
 
@@ -298,23 +306,23 @@ export default function Index() {
           <div className="grid-2 mt-8">
             <div className="reveal reveal-delay-2">
               <div className="glass-card glass-card-highlight">
-                <h3 className="font-bold text-lg mb-4">Causas Identificadas</h3>
+                <h3 className="font-bold text-lg mb-4">{t("failure.causes.title")}</h3>
                 <ul className="list-styled">
-                  <li>Decisão tomada antes da leitura técnica completa</li>
-                  <li>CT usado apenas para validar o que já estava executado</li>
-                  <li>Tendência de umidade crescente não acionou gatilho de parada</li>
-                  <li>Energia de compactação aumentada artificialmente para "forçar" aprovação</li>
-                  <li>Ausência de critérios claros de quando reduzir ritmo</li>
+                  <li>{t("failure.causes.1")}</li>
+                  <li>{t("failure.causes.2")}</li>
+                  <li>{t("failure.causes.3")}</li>
+                  <li>{t("failure.causes.4")}</li>
+                  <li>{t("failure.causes.5")}</li>
                 </ul>
               </div>
             </div>
 
             <div className="reveal reveal-delay-3">
               <div className="figure-container">
-                <img src={lab} alt="Laboratório e ensaios" />
+                <img src={lab} alt="Laboratory and tests" />
                 <div className="figure-caption">
-                  <span className="figure-label">Figura 03</span>
-                  O dado existia. A leitura decisória não.
+                  <span className="figure-label">{t("failure.figure3.label")}</span>
+                  {t("failure.figure3.caption")}
                 </div>
               </div>
             </div>
@@ -326,9 +334,9 @@ export default function Index() {
       <section className="slide">
         <div className="slide-content">
           <div className="reveal">
-            <h2 className="title-section">O Impacto Real</h2>
+            <h2 className="title-section">{t("impact.title")}</h2>
             <p className="subtitle mb-8">
-              Quando o CT não orienta a decisão, o impacto aparece em três frentes: custo, risco e confiabilidade. Veja a evolução do problema ao longo do tempo.
+              {t("impact.subtitle")}
             </p>
           </div>
 
@@ -340,21 +348,21 @@ export default function Index() {
             <div className="kpi-grid">
               <KPI
                 tone="copper"
-                title="Retrabalho / Reforço"
-                value="+12%"
-                help="Do orçamento original consumido em correções que poderiam ter sido evitadas com ajuste preventivo."
+                title={t("impact.kpi1.title")}
+                value={t("impact.kpi1.value")}
+                help={t("impact.kpi1.help")}
               />
               <KPI
                 tone="steel"
-                title="Investimento em CT"
-                value="0,7%"
-                help="O CT custa menos de 1% do orçamento. O erro de não usá-lo como gatilho custa 10x mais."
+                title={t("impact.kpi2.title")}
+                value={t("impact.kpi2.value")}
+                help={t("impact.kpi2.help")}
               />
               <KPI
                 tone="graphite"
-                title="Prazo Impactado"
-                value="+25 dias"
-                help="Atraso acumulado devido a retrabalho, mobilização extra e revalidação de processos."
+                title={t("impact.kpi3.title")}
+                value={t("impact.kpi3.value")}
+                help={t("impact.kpi3.help")}
               />
             </div>
           </div>
@@ -365,9 +373,9 @@ export default function Index() {
       <section className="slide">
         <div className="slide-content">
           <div className="reveal">
-            <h2 className="title-section">A Decisão Que Deveria Ter Sido Tomada</h2>
+            <h2 className="title-section">{t("decision.title")}</h2>
             <p className="subtitle mb-8">
-              Em obra crítica, "seguir" sem ler o dado é apostar às cegas. A decisão segura é simples — e difícil de aplicar sem cultura técnica.
+              {t("decision.subtitle")}
             </p>
           </div>
 
@@ -376,25 +384,25 @@ export default function Index() {
               <DecisionChecklist />
 
               <div className="note-box mt-6">
-                <strong>Princípio fundamental:</strong> CT não valida decisão — ele <em>define quando decidir</em>. A obra que integra o CT ao fluxo de execução reduz retrabalho, controla risco e mantém credibilidade técnica.
+                <strong>{t("decision.principle.label")}</strong> {t("decision.principle.text")} <em>{t("decision.principle.highlight")}</em>{t("decision.principle.end")}
               </div>
             </div>
 
             <div className="reveal reveal-delay-2">
               <div className="figure-container">
-                <img src={monitoramento} alt="Instrumentação e monitoramento" />
+                <img src={monitoramento} alt="Instrumentation and monitoring" />
                 <div className="figure-caption">
-                  <span className="figure-label">Figura 04</span>
-                  Monitoramento contínuo: detectar desvios milimétricos antes que virem problemas estruturais.
+                  <span className="figure-label">{t("decision.figure4.label")}</span>
+                  {t("decision.figure4.caption")}
                 </div>
               </div>
 
               <div className="glass-card glass-card-steel mt-4">
-                <h4 className="font-bold mb-3">Gatilhos Recomendados</h4>
+                <h4 className="font-bold mb-3">{t("decision.triggers.title")}</h4>
                 <ul className="list-styled text-sm">
-                  <li>Umidade 0,5% acima do ótimo por 2 dias → reduzir ritmo</li>
-                  <li>Dispersão de GC {">"} 2% → reavaliar processo</li>
-                  <li>Tendência crescente em 3 leituras → parar e ajustar</li>
+                  <li>{t("decision.triggers.1")}</li>
+                  <li>{t("decision.triggers.2")}</li>
+                  <li>{t("decision.triggers.3")}</li>
                 </ul>
               </div>
             </div>
@@ -406,11 +414,11 @@ export default function Index() {
       <section className="slide footer-slide">
         <div className="reveal">
           <blockquote className="footer-quote">
-            "Em pilhas e barragens, um controle tecnológico atuante não é opcional — é base de decisão segura e responsável."
+            {t("footer.quote")}
           </blockquote>
 
           <p className="footer-signature">
-            Diego R. Jesus — Análise técnica aplicada (mineração / CT)
+            {t("footer.signature")}
           </p>
         </div>
       </section>

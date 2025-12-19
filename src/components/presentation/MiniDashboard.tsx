@@ -1,43 +1,44 @@
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface MetricProps {
-  label: string;
-  value: string;
-  change?: string;
+  labelKey: string;
+  valueKey: string;
+  changeKey?: string;
   level: "high" | "medium" | "low" | "neutral";
   barPercent?: number;
   barColor?: string;
 }
 
-const metrics: MetricProps[] = [
+const metricsConfig: MetricProps[] = [
   {
-    label: "Risco Operacional",
-    value: "Alto",
-    change: "sem monitoramento",
+    labelKey: "dashboard.risk.label",
+    valueKey: "dashboard.risk.value",
+    changeKey: "dashboard.risk.change",
     level: "high",
     barPercent: 85,
     barColor: "hsl(0, 70%, 55%)",
   },
   {
-    label: "Custo Correção",
-    value: "R$ 500k",
-    change: "retrabalho estimado",
+    labelKey: "dashboard.cost.label",
+    valueKey: "dashboard.cost.value",
+    changeKey: "dashboard.cost.change",
     level: "high",
     barPercent: 78,
     barColor: "hsl(0, 70%, 55%)",
   },
   {
-    label: "Prazo Impacto",
-    value: "30 dias",
-    change: "atraso provável",
+    labelKey: "dashboard.time.label",
+    valueKey: "dashboard.time.value",
+    changeKey: "dashboard.time.change",
     level: "medium",
     barPercent: 60,
     barColor: "hsl(38, 90%, 55%)",
   },
   {
-    label: "Confiabilidade",
-    value: "65%",
-    change: "abaixo do ideal",
+    labelKey: "dashboard.reliability.label",
+    valueKey: "dashboard.reliability.value",
+    changeKey: "dashboard.reliability.change",
     level: "medium",
     barPercent: 65,
     barColor: "hsl(38, 90%, 55%)",
@@ -46,6 +47,7 @@ const metrics: MetricProps[] = [
 
 function DashboardCard({ metric, isVisible }: { metric: MetricProps; isVisible: boolean }) {
   const [barWidth, setBarWidth] = useState(0);
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (isVisible && metric.barPercent) {
@@ -56,9 +58,9 @@ function DashboardCard({ metric, isVisible }: { metric: MetricProps; isVisible: 
 
   return (
     <div className="dashboard-card">
-      <div className="dashboard-label">{metric.label}</div>
-      <div className={`dashboard-value ${metric.level}`}>{metric.value}</div>
-      {metric.change && <div className="dashboard-change">{metric.change}</div>}
+      <div className="dashboard-label">{t(metric.labelKey)}</div>
+      <div className={`dashboard-value ${metric.level}`}>{t(metric.valueKey)}</div>
+      {metric.changeKey && <div className="dashboard-change">{t(metric.changeKey)}</div>}
       {metric.barPercent && (
         <div className="dashboard-bar">
           <div
@@ -77,7 +79,7 @@ function DashboardCard({ metric, isVisible }: { metric: MetricProps; isVisible: 
 export function MiniDashboard({ isVisible = false }: { isVisible?: boolean }) {
   return (
     <div className="dashboard-grid">
-      {metrics.map((metric, i) => (
+      {metricsConfig.map((metric, i) => (
         <DashboardCard key={i} metric={metric} isVisible={isVisible} />
       ))}
     </div>

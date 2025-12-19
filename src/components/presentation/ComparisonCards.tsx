@@ -1,22 +1,25 @@
 import { XCircle, CheckCircle } from "lucide-react";
-
-const negative = [
-  "Decisão baseada em prazo e pressão",
-  "CT consultado apenas para validar o que já foi feito",
-  "Tendência de desvio ignorada ou minimizada",
-  "Correção posterior com custo elevado",
-  "Risco acumulativo não quantificado",
-];
-
-const positive = [
-  "Decisão orientada por gatilhos técnicos",
-  "CT integrado ao fluxo de execução",
-  "Tendência analisada em tempo real",
-  "Ajuste preventivo com custo controlado",
-  "Risco monitorado e documentado",
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function ComparisonCards() {
+  const { t } = useLanguage();
+
+  const negative = [
+    t("comparison.negative.1"),
+    t("comparison.negative.2"),
+    t("comparison.negative.3"),
+    t("comparison.negative.4"),
+    t("comparison.negative.5"),
+  ];
+
+  const positive = [
+    t("comparison.positive.1"),
+    t("comparison.positive.2"),
+    t("comparison.positive.3"),
+    t("comparison.positive.4"),
+    t("comparison.positive.5"),
+  ];
+
   return (
     <div className="comparison-grid">
       <div className="comparison-card negative reveal">
@@ -24,7 +27,7 @@ export function ComparisonCards() {
           <div className="comparison-icon">
             <XCircle size={20} />
           </div>
-          <div className="comparison-title">Decisão Apressada</div>
+          <div className="comparison-title">{t("comparison.negative.title")}</div>
         </div>
         <ul className="comparison-list">
           {negative.map((item, i) => (
@@ -38,7 +41,7 @@ export function ComparisonCards() {
           <div className="comparison-icon">
             <CheckCircle size={20} />
           </div>
-          <div className="comparison-title">Decisão Bem Analisada</div>
+          <div className="comparison-title">{t("comparison.positive.title")}</div>
         </div>
         <ul className="comparison-list">
           {positive.map((item, i) => (
